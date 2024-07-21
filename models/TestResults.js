@@ -1,0 +1,24 @@
+const mongoose = require('mongoose');
+
+const testResultSchema = new mongoose.Schema({
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required: true,
+  },
+  result: {
+    type: String,
+  },
+  type: {
+    type: String,
+    default: 'phys',
+    enum: ['phys', "border"]
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    index: true
+  },
+});
+
+module.exports = mongoose.model('TestResults', testResultSchema);
