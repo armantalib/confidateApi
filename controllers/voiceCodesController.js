@@ -94,11 +94,11 @@ exports.deactivateMessage = async (req, res) => {
   }
 };
 
-exports.deleteMessages = async (req, res) => {
+exports.deleteVoiceCode = async (req, res) => {
   try {
     const serviceId = req.params.id;
 
-    const service = await EmergencyMessages.findByIdAndDelete(serviceId);
+    const service = await VoiceCodes.findByIdAndDelete(serviceId);
 
     if (service == null) {
       return res.status(404).json({ message: 'Something went wrong on server' });

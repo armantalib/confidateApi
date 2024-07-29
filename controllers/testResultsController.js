@@ -5,12 +5,13 @@ const lang = require('../routes/lang.json');
 
 exports.create = async (req, res) => {
   try {
-    const { result,type} = req.body;
+    const { result,type,test_image} = req.body;
     const userId = req.user._id;
     const createRecord = new TestResults({
       user_id: userId,
       result,
-      type
+      type,
+      test_image
     });
     await createRecord.save();
 
@@ -87,6 +88,25 @@ exports.deleteAdminTest = async (req, res) => {
 
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong on server' });
+  }
+};
+
+exports.getTestUser = async (req, res) => {
+  const userId = req.user._id;
+  let query = {};
+  if (req.params.id) {
+    query._id = { $lt: req.params.id };
+  }
+  query.user_id = userId
+  try {
+    const data = await TestResults.find(query).sort({ _id: -1 }).lean();
+    if (data.length > 0) {
+      res.status(200).json({ success: true, data: data });
+    } else {
+      res.status(200).json({ success: false,data:[], message: 'Not Test Found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: lang['error'] });
   }
 };
 

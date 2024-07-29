@@ -9,6 +9,9 @@ const testResultSchema = new mongoose.Schema({
   result: {
     type: String,
   },
+  test_image: {
+    type: String,
+  },
   type: {
     type: String,
     default: 'phys',

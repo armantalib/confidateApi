@@ -419,65 +419,51 @@ router.post('/check-phone', async (req, res) => {
 
 router.put('/update-user', auth, async (req, res) => {
   const {
-    fname,
-    lname,
-    email,
-    phone,
-    image,
-    selfiId,
-    idFront,
-    idBack,
-    profession,
-    profession_detail,
-    location,
+    name,
     age,
-    type,
-    noti
+    education,
+    about,
+    location,
+    job_title,
+    height,
+    weight
   } = req.body;
 
   // Create an object to store the fields to be updated
   const updateFields = Object.fromEntries(
     Object.entries({
-      fname,
-      lname,
-      email,
-      phone,
-      image,
-      selfiId,
-      idFront,
-      idBack,
-      profession,
-      profession_detail,
-      location,
+      name,
       age,
-      type,
-      noti
+      education,
+      about,
+      location,
+      job_title,
+      height,
+      weight,
     }).filter(([key, value]) => value !== undefined)
   );
 
   // Check if there are any fields to update
   if (Object.keys(updateFields).length === 0) {
-    return res.status(400).send({ success: false, message: req.user.lang == 'spanish' ? lang2["novalid"] : lang["novalid"] });
+    return res.status(400).send({ success: false, message:lang["novalid"] });
   }
   const user = await User.findByIdAndUpdate(req.user._id, updateFields, {
     new: true
   });
 
-  if (!user) return res.status(404).send({ success: false, message: req.user.lang == 'spanish' ? lang2["nouserfound"] : lang["nouserfound"] });
+  if (!user) return res.status(404).send({ success: false, message:  lang["nouserfound"] });
 
-  res.send({ success: true, message: req.user.lang == 'spanish' ? lang2["userupdate"] : lang["userupdate"], user });
+  res.send({ success: true, message:  lang["userupdate"], user });
 });
 
-router.put('/update-lang', auth, async (req, res) => {
-  const { lang } = req.body;
+router.put('/update-img', auth, async (req, res) => {
+  const { image } = req.body;
 
-  const user = await User.findByIdAndUpdate(req.user._id, { lang: lang }, { new: true });
+  const user = await User.findByIdAndUpdate(req.user._id, { image: image }, { new: true });
 
-  if (!user) return res.status(404).send({ success: false, message: req.user.lang == 'spanish' ? lang2["nouserfound"] : lang["nouserfound"] });
-
-  const token = generateAuthToken(user._id, user.type, user.lang);
-
-  res.send({ success: true, message: req.user.lang == 'spanish' ? lang2["userupdate"] : lang["userupdate"], user, token });
+  if (!user) return res.status(404).send({ success: false, message:  lang["nouserfound"] });
+ 
+  res.send({ success: true, message: lang["userupdate"], user });
 });
 
 router.post('/add-bank', auth, async (req, res) => {

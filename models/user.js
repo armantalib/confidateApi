@@ -3,28 +3,6 @@ const Joi = require('joi');
 const config = require('config');
 const mongoose = require('mongoose');
 
-const profeDetails = {
-  about: {
-    type: String,
-    minlength: 0,
-    maxlength: 1024,
-  },
-  experience: {
-    type: String,
-    minlength: 0,
-    maxlength: 255,
-  },
-  lang: {
-    type: String,
-    minlength: 0,
-    maxlength: 255,
-  },
-  skills: {
-    type: String,
-    minlength: 0,
-    maxlength: 255,
-  },
-}
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -57,6 +35,30 @@ const userSchema = new mongoose.Schema({
     minlength: 0,
     maxlength: 4,
   },
+  age: {
+    type: String,
+  },
+  education: {
+    type: String,
+  },
+  about: {
+    type: String,
+  },
+  location: {
+    type: String,
+  },
+  job_title: {
+    type: String,
+  },
+  height: {
+    type: String,
+  },
+  weight: {
+    type: String,
+  },
+  image: {
+    type: String,
+  },
 
   status: {
     type: String,
@@ -72,8 +74,8 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-function generateAuthToken(_id,email) {
-  const token = jwt.sign({ _id: _id,email:email }, config.get('jwtPrivateKey'));
+function generateAuthToken(_id, email) {
+  const token = jwt.sign({ _id: _id, email: email }, config.get('jwtPrivateKey'));
   return token;
 }
 function generateIdToken(_id) {
