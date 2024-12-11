@@ -8,11 +8,10 @@ const emergencyMessagesSchema = new mongoose.Schema({
   },
   message: {
     type: String,
-    required: true,
+
   },
   message_t: {
     type: String,
-    required: true,
   },
   active: {
     type: Boolean,

@@ -107,6 +107,8 @@ exports.deleteVoiceCode = async (req, res) => {
     res.status(200).json({ message:'Message Deleted Successfully', messages: service });
 
   } catch (error) {
+    console.log("Er",error);
+    
     res.status(500).json({ message: req.user.lang=='spanish'?lang2["error"]:lang["error"] });
   }
 };
